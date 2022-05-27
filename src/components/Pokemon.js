@@ -1,7 +1,5 @@
-import React, { useState , useEffect, useSyncExternalStore, createElement ,  } from 'react';
+import React, { useState , useEffect} from 'react';
 import axios from 'axios';
-import { type } from '@testing-library/user-event/dist/type';
-
 
 const Pokemon = () => {
 
@@ -12,6 +10,10 @@ const Pokemon = () => {
     const [mydefense, setdefense] = useState('');
     const [myspeed , setSpeed] = useState('');
     const [mypic , setImage]= useState('');
+    const [typeone , setTypeOne]= useState('');
+    const [typetwo , setTypeTwo]=useState('');
+    
+    const cards = document.getElementById("cards");
 
     const typesColor = {
         bug: "#26de81",
@@ -35,6 +37,7 @@ const Pokemon = () => {
 
    
    
+   
    useEffect(() => {
 
 
@@ -42,7 +45,6 @@ const Pokemon = () => {
 
         // affiche le premier pokemon
         let  id = 1 
-        // let span =  document.querySelector(".pokemon-types").removeChild(span)
          await axios.get(url+id).then(res => {
 
             setName(res.data.name)
@@ -51,6 +53,10 @@ const Pokemon = () => {
             setdefense(res.data.stats[2].base_stat)
             setSpeed(res.data.stats[5].base_stat)
             setImage(res.data.sprites.other.dream_world.front_default)
+            setTypeOne(res.data.types[0].type.name);
+            setTypeTwo(res.data.types[1].type.name);
+            
+            
         
         })
 
@@ -59,9 +65,12 @@ const Pokemon = () => {
     
     },[])
 
-    async function generate(){
-        
+
+    function generate(){
+
+
         let id = Math.floor(Math.random()* 150 + 1);
+
         axios.get(url+id).then(res => {
                 
             setName(res.data.name)
@@ -70,11 +79,32 @@ const Pokemon = () => {
             setdefense(res.data.stats[2].base_stat)
             setSpeed(res.data.stats[5].base_stat)
             setImage(res.data.sprites.other.dream_world.front_default);
-             
-        })
+            setTypeOne(res.data.types[0].type.name);
+
+            if(res.data.types[1].type.name !== null){
+            setTypeTwo(res.data.types[1].type.name);
+            }
+
+            const themeColor = typesColor[res.data.types[0].type.name]
+        
+        
+
+            let cardstylecolor = (color) => {
+
+                cards.style.background =  `radial-gradient(circle at 50% 0%, ${color}, 36% , #ffff 36%)`;
+                
+                cards.querySelectorAll(".pokemon-types span").forEach((typeColor) => { 
+                    typeColor.style.backgroundColor = color ;
+                });
+
+            };
+
+            cardstylecolor(themeColor)
+
+        });
 
        
-    }
+    };
     
     return (
         <>
@@ -87,8 +117,10 @@ const Pokemon = () => {
                     <img src={mypic} alt="pokemon-view" /> 
                     <h2 className='pokemon-name'>{myname}</h2>
 
-                    <div className='pokemon-types'>
-                    
+                    <div className='pokemon-types'>  
+                    <span>{typeone}</span>
+                    <span>{typetwo}</span>
+
                     </div>
                     <div className='pokemon-stats'>
                         <div>

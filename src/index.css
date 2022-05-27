@@ -34,8 +34,10 @@ img {
 
 .container {
   width: 100%;
+  /* height: 65vh; */
   display: flex;
   justify-content: center;
+  /* background-color: red; */
 }
 
 .card-pokemon {
@@ -126,41 +128,7 @@ button:hover {
 }
 
 
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 35px;
-  background-color: aliceblue;
-  text-align: center;
-}
-
-.footer a {
-  padding-top: 20px;
-  font-weight: 600;
-  color: black;
-}
-
-@media (min-width: 500px) { 
-
-  .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 25px;
-    background-color: aliceblue;
-    text-align: center;
-  }
-  
-  .footer a {
-    padding-top: 1px;
-    font-weight: 600;
-    color: black;
-  }
-
- }
 
 
 
-  
 
